@@ -1,6 +1,6 @@
 body {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0))), url(/Word-Guess-Game/assets/images/8n4xdGWDcLCYq9az5yCq_P4o5MzmjQLt225vGMxiaU8.jpg);
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(/Word-Guess-Game/assets/images/8n4xdGWDcLCYq9az5yCq_P4o5MzmjQLt225vGMxiaU8.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+    url(/Word-Guess-Game/assets/images/8n4xdGWDcLCYq9az5yCq_P4o5MzmjQLt225vGMxiaU8.jpg);
   min-height: 600px;
   background-attachment: fixed;
   background-position: center;
@@ -14,7 +14,7 @@ body {
 }
 
 h1 {
-  color: #2b1506;
+  color: rgb(43, 21, 6);
   text-align: center;
   font-size: 4em;
   margin: 10px 0px 0px 0px;
@@ -22,7 +22,7 @@ h1 {
 }
 
 h3 {
-  color: #2b1506;
+  color: rgb(43, 21, 6);
   text-align: center;
   font-size: 2em;
   margin: 0px 0px 0px 0px;
@@ -30,10 +30,9 @@ h3 {
 }
 
 .game {
-  color: #2b1506;
+  color: rgb(43, 21, 6);
   font-size: 1.5em;
   margin: 50px 0px 0px 50px;
   line-height: 3em;
   font-family: BlackPearl;
 }
-/*# sourceMappingURL=style.css.map */
