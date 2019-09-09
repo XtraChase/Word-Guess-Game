@@ -1,52 +1,103 @@
 var wins = 0;
 var losses = 0;
-var guessesLeft = 0;
+var numBlanks;
 var guesses = [];
-var numGuesses = 0;
+var answerWord = [];
+var secretWord = [];
 
-//HTML text fields
 var guessesText = document.getElementById("guessesText");
+var currentWord = document.getElementById("wordText");
 var winsText = document.getElementById("winsText");
 var guessesLeftText = document.getElementById("guessesLeftText");
 
 //assigns a random secret letter
-function randomCharacter() {
-  var chars = "abcdefghijklmnopqrxtuvwxyz";
-  return chars.substr(Math.floor(Math.random() * 26), 1);
+function randomWord() {
+  var words = [
+    "ahoy",
+    "plank",
+    "booty",
+    "seadog",
+    "captain",
+    "buccaneer",
+    "privateer",
+    "arrrr",
+    "marooned",
+    "parley",
+    "cutlass",
+    "doubloon",
+    "grog",
+    "keelhaul",
+    "scurvy",
+    "barnacles",
+    "ship",
+    "lad",
+    "matey",
+    "anchor",
+    "pillage",
+    "scuttle"
+  ];
+  //picks a random word
+  var word = words[Math.floor(Math.random() * words.length)];
+  return word;
+}
+
+function underscoreString(num) {
+  // create string of underscores of length num
+  var charArray = [];
+  for (var i = 0; i < num; i++) {
+    charArray[i] = "_";
+  }
+  return charArray.join(); //join converts array to string, elements separated by a space
 }
 
 //start a game round
 function startNewRound() {
-  guessesText.textContent = "";
-  guessesLeft.textContent = "";
-  numGuesses = 0;
+  //get new random word
+  secretWord = randomWord();
+
+  //reinitialize globals
   guesses = [];
-  secretLetter = randomCharacter();
+  answerWord = underscoreString(secretWord.length);
+  numBlanks = secretWord.length;
+
+  //update text fields
+  guessesText.textContent = "";
+  currentWord.textContent = answerWord;
+  winsText.textContent = "";
+  guessesLeftText.textContent = "";
 }
 
-// Function to print guesses letter when onkeyup event fires.
+// Print guesses letter when onkeyup event fires.
 document.onkeyup = function(event) {
   var letterGuessed = event.key;
 
   //gameplay
-  if (letterGuessed == secretLetter) {
+  if (answerWord == secretWord) {
     //win
     wins++;
     winsText.textContent = wins;
-    console.log("Wins");
+    //congratulate the player
+    console.log("Good job! The answer was " + randomWord());
     startNewRound();
-  } else if (numGuesses < 7) {
-    //guessing
+  } else if (guesses.length < numBlanks) {
+    numBlanks = 0;
     console.log(letterGuessed);
+    //Test if letterGuessed is in secretWord.
+    for (var i = 0; i < secretWord.length; i++) {
+      if (secretWord[i] == letterGuessed) {
+        answerWord[i] = letterGuessed;
+      } else if (answerWord[i] == "_") {
+        numBlanks++;
+      }
+    }
     guesses.push(letterGuessed); // append letter to end of array
     guessesText.textContent = guesses;
-    numGuesses++;
-    guessesLeft = 7 - numGuesses;
-    guessesLeftText.textContent = guessesLeft;
+    guessesLeftText.textContent = numBlanks - guesses.length;
   } else {
     // lost
     losses++;
     startNewRound();
     console.log("Loss");
   }
+  currentWord.textContent = answerWord;
 };
