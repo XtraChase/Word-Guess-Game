@@ -47,19 +47,17 @@ function underscoreString(num) {
   for (var i = 0; i < num; i++) {
     charArray[i] = "_";
   }
-  return charArray.join(); //join converts array to string, elements separated by a space
+  return charArray.join(" "); //join converts array to string, elements separated by a space
 }
 
 //start a game round
 function startNewRound() {
   //get new random word
   secretWord = randomWord();
-
   //reinitialize globals
   guesses = [];
   answerWord = underscoreString(secretWord.length);
   numBlanks = secretWord.length;
-
   //update text fields
   guessesText.textContent = "";
   currentWord.textContent = answerWord;
@@ -79,12 +77,12 @@ document.onkeyup = function(event) {
     //congratulate the player
     console.log("Good job! The answer was " + randomWord());
     startNewRound();
-  } else if (guesses.length < numBlanks) {
+  } else if (guesses.length < 10) {
     numBlanks = 0;
     console.log(letterGuessed);
     //Test if letterGuessed is in secretWord.
     for (var i = 0; i < secretWord.length; i++) {
-      if (secretWord[i] == letterGuessed) {
+      if (secretWord[i] === letterGuessed) {
         answerWord[i] = letterGuessed;
       } else if (answerWord[i] == "_") {
         numBlanks++;
@@ -92,7 +90,7 @@ document.onkeyup = function(event) {
     }
     guesses.push(letterGuessed); // append letter to end of array
     guessesText.textContent = guesses;
-    guessesLeftText.textContent = numBlanks - guesses.length;
+    guessesLeftText.textContent = 10 - guesses.length;
   } else {
     // lost
     losses++;
@@ -101,3 +99,15 @@ document.onkeyup = function(event) {
   }
   currentWord.textContent = answerWord;
 };
+
+// If the letter exists somewhere in the word, then figure out exactly where (which indices).
+if (letterInWord) {
+  // Loop through the word.
+  for (var j = 0; j < numBlanks; j++) {
+    // Populate the blanksAndSuccesses with every instance of the letter.
+    if (secretWord[j] === guesses) {
+      // Here we set the specific space in blanks and letter equal to the letter when there is a match.
+      blanksAndSuccesses[j] = guesses;
+    }
+  }
+}
